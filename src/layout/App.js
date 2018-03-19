@@ -24,11 +24,16 @@ class App extends Component {
     }
 
     inputChange(v) {
-        let todoInputValid = v.length >= 3;
+        let todoInputValid = v.trim().length >= 3;
         this.setState({
             todoInput: v,
             todoInputValid
         });
+    };
+
+    deleteInput(todo) {
+        const todoList = this.state.todoList.filter(el => el !== todo);
+        this.setState({ todoList }, () => { console.log(this.state); });
     }
 
     render() {
@@ -37,7 +42,10 @@ class App extends Component {
                 <div className="row">
                     <div className="col border">
                         <ul>
-                            {this.state.todoList.map(el => <li key={el}>{el}</li>)}
+                            {this.state.todoList.map(el => <li key={el}>{el}
+                                <span className="btn btn-danger btn-sm"
+                                      onClick={() => this.deleteInput(el)}>Delete</span>
+                            </li>)}
                         </ul>
                     </div>
                     <div className="col">
@@ -51,7 +59,8 @@ class App extends Component {
                             <div className="input-group-append">
                                 <button
                                     disabled={!this.state.todoInputValid}
-                                    className="btn btn-outline-primary" onClick={() => this.addTodo()}>Add</button>
+                                    className="btn btn-outline-primary" onClick={() => this.addTodo()}>Add
+                                </button>
                             </div>
                         </div>
                     </div>
