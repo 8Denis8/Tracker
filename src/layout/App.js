@@ -11,10 +11,17 @@ class App extends Component {
         }
     }
 
-    addTodo() {
+    uniqId() {
+        return([1e7] + -1e3 + -4e3 + -8e3 + -1e11).
+        replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
+    }
 
+    addTodo() {
         const todoList = this.state.todoList;
-        todoList.push(this.state.todoInput);
+        todoList.push({
+            id: this.uniqId(),
+            name: this.state.todoInput,
+        });
 
         this.setState({
             todoList,
@@ -31,9 +38,9 @@ class App extends Component {
         });
     };
 
-    deleteInput(todo) {
-        const todoList = this.state.todoList.filter(el => el !== todo);
-        this.setState({ todoList }, () => { console.log(this.state); });
+    deleteInput(id) {
+        const todoList = this.state.todoList.filter(el => el.id !== id);
+        this.setState({ todoList });
     }
 
     render() {
@@ -42,9 +49,9 @@ class App extends Component {
                 <div className="row">
                     <div className="col border">
                         <ul>
-                            {this.state.todoList.map(el => <li key={el}>{el}
+                            {this.state.todoList.map(el => <li key={el.id}>{el.name}
                                 <span className="btn btn-danger btn-sm"
-                                      onClick={() => this.deleteInput(el)}>Delete</span>
+                                      onClick={() => this.deleteInput(el.id)}>Delete</span>
                             </li>)}
                         </ul>
                     </div>
