@@ -13,7 +13,8 @@ class App extends Component {
 
     uniqId() {
         return([1e7] + -1e3 + -4e3 + -8e3 + -1e11).
-        replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16))
+        replace(/[018]/g, c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).
+        toString(16))
     }
 
     addTodo() {
@@ -43,6 +44,12 @@ class App extends Component {
         this.setState({ todoList });
     }
 
+    pressEnterButton(e){
+        if (e.key === 'Enter' && this.state.todoInputValid) {
+            this.addTodo();
+        }
+    }
+
     render() {
         return (
             <div className="container pt-4">
@@ -60,13 +67,15 @@ class App extends Component {
                             <input
                                 className="form-control"
                                 type="text"
+                                placeholder={"enter something"}
                                 value={this.state.todoInput}
                                 onChange={(e) => this.inputChange(e.target.value)}
+                                onKeyPress={(e) => this.pressEnterButton(e) }
                             />
                             <div className="input-group-append">
                                 <button
                                     disabled={!this.state.todoInputValid}
-                                    className="btn btn-outline-primary" onClick={() => this.addTodo()}>Add
+                                    className="btn btn-primary" onClick ={() => this.addTodo()}>Add
                                 </button>
                             </div>
                         </div>
