@@ -57,7 +57,7 @@ class App extends Component {
                     <div className="col border">
                         <ul>
                             {this.state.todoList.map(el => <li key={el.id}>{el.name}
-                                <span className="btn btn-danger btn-sm"
+                                <span className="badge badge-danger float-right"
                                       onClick={() => this.deleteInput(el.id)}>Delete</span>
                             </li>)}
                         </ul>
