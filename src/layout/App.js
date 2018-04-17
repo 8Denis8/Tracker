@@ -29,6 +29,7 @@ class App extends Component {
             todoInput: '',
             todoInputValid: false,
         });
+        fetch('http://localhost:5000/product', {method: 'POST'}).then(responce => responce.json()).then(json => console.log(json))
     }
 
     inputChange(v) {
