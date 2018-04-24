@@ -23,6 +23,7 @@ class App extends Component {
             id: this.uniqId(),
             name: this.state.todoInput,
         });
+        fetch('http://localhost:5000/todo', {method: 'POST'}).then(responce => responce.json()).then(json => console.log(json))
 
         this.setState({
             todoList,
@@ -76,8 +77,9 @@ class App extends Component {
                             <div className="input-group-append">
                                 <button
                                     disabled={!this.state.todoInputValid}
-                                    className="btn btn-primary" onClick ={() => this.addTodo()}>Add
+                                    className="btn btn-primary" onClick ={() => this.addTodo()}>Submit
                                 </button>
+                                <button className="btn btn-primary" >Load</button>
                             </div>
                         </div>
                     </div>
